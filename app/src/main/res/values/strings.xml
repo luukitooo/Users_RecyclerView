@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Users Recycler View</string>
+    <string name="create_user">Create User</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="e_mail">E-mail</string>
+    <string name="save_user">Save User</string>
+</resources>
