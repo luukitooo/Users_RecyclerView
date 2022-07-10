@@ -34,23 +34,19 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        usersAdapter.setOnDeleteClickListener(object : RecyclerViewUserAdapter.OnDeleteClickListener {
-            override fun onClick(user: User) {
-                usersList = usersList.toMutableList()
-                usersList.remove(user)
-                updateRecycler(usersList)
-            }
-        })
+        usersAdapter.onDeleteClickListener = {
+            usersList = usersList.toMutableList()
+            usersList.remove(it)
+            updateRecycler(usersList)
+        }
 
-        usersAdapter.setOnEditClickListener(object : RecyclerViewUserAdapter.OnEditClickListener {
-            override fun onClick(user: User) {
-                Intent(this@MainActivity, UserActivity::class.java).apply {
-                    putExtra("isEditing", true)
-                    putExtra("user", user)
-                    startActivity(this)
-                }
+        usersAdapter.onEditClickListener = {
+            Intent(this@MainActivity, UserActivity::class.java).apply {
+                putExtra("isEditing", true)
+                putExtra("user", it)
+                startActivity(this)
             }
-        })
+        }
     }
 
     override fun onRestart() {

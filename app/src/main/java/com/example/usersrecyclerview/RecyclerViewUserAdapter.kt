@@ -8,8 +8,8 @@ import com.example.usersrecyclerview.databinding.UserItemBinding
 
 class RecyclerViewUserAdapter(private var users: List<User>): RecyclerView.Adapter<RecyclerViewUserAdapter.UserViewHolder>() {
 
-    private var onDeleteClickListener: OnDeleteClickListener? = null
-    private var onEditClickListener: OnEditClickListener? = null
+    var onDeleteClickListener: ((User) -> Unit)? = null
+    var onEditClickListener: ((User) -> Unit)? = null
 
     inner class UserViewHolder(val binding: UserItemBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -33,14 +33,10 @@ class RecyclerViewUserAdapter(private var users: List<User>): RecyclerView.Adapt
             emailTextView.text = user.email
 
             deleteImageButton.setOnClickListener {
-                onDeleteClickListener.let {
-                    onDeleteClickListener?.onClick(user)
-                }
+                onDeleteClickListener?.invoke(user)
             }
             editImageButton.setOnClickListener {
-                onEditClickListener.let {
-                    onEditClickListener?.onClick(user)
-                }
+                onEditClickListener?.invoke(user)
             }
         }
     }
@@ -50,22 +46,6 @@ class RecyclerViewUserAdapter(private var users: List<User>): RecyclerView.Adapt
         val diffResult = DiffUtil.calculateDiff(diffUtil)
         users = newList
         diffResult.dispatchUpdatesTo(this)
-    }
-
-    interface OnDeleteClickListener {
-        fun onClick(user: User)
-    }
-
-    fun setOnDeleteClickListener(onDeleteClickListener: OnDeleteClickListener) {
-        this.onDeleteClickListener = onDeleteClickListener
-    }
-
-    interface OnEditClickListener {
-        fun onClick(user: User)
-    }
-
-    fun setOnEditClickListener(onEditClickListener: OnEditClickListener) {
-        this.onEditClickListener = onEditClickListener
     }
 
 }
